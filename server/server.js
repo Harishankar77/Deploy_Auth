@@ -16,7 +16,7 @@ const DIRNAME = path.resolve();
 connectDB();
 
 // ✅ Fix: Allow frontend to access backend
-const allowedOrigins = [""];
+const allowedOrigins = ["https://hari-auth.onrender.com"];
 app.use(
   cors({
     origin: allowedOrigins, // ✅ Corrected the allowed origin
