@@ -5,9 +5,12 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/mongodb.js";
 import authRoute from "./routes/authRoute.js";
 import userRoute from "./routes/userRoute.js";
+import path from "path";
 
-const port = process.env.PORT || 4000;
 const app = express();
+const port = process.env.PORT || 4000;
+
+const DIRNAME = path.resolve();
 
 // Connect to Database
 connectDB();
@@ -31,6 +34,11 @@ app.use(cookieParser());
 // Routes
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
+
+app.use(express.static(path.join(DIRNAME, "/client/dist")));
+app.use("*", (_, res) => {
+  res.sendFile(path.resolve(DIRNAME, "client", "dist", "index.html"));
+});
 
 // Start Server
 app.listen(port, () => {
